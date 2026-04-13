@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Code AI – Settings</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div class="logo">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+        <path d="M16 18l6-6-6-6M8 6L2 12l6 6" stroke="#6C63FF" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <h1>Code AI <span>Settings</span></h1>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- API key status -->
+    <section class="card">
+      <h2>API Key Status</h2>
+      <div id="key-status" class="key-status checking">
+        <span class="dot"></span>
+        <span id="key-msg">Checking…</span>
+      </div>
+      <button id="check-btn" class="secondary-btn">Refresh Status</button>
+    </section>
+
+    <!-- Setup instructions -->
+    <section class="card">
+      <h2>Setup – inject API key from <code>.env</code></h2>
+      <p class="desc">
+        The extension reads your key from <code>.env</code> via a one-time script.
+        No key is ever typed into the browser UI.
+      </p>
+
+      <ol class="steps">
+        <li>
+          <span class="step-num">1</span>
+          <div>
+            Make sure <code>GEMINI_API_KEY</code> is set in your project's
+            <code>.env</code> file:
+            <pre class="code-snippet">GEMINI_API_KEY=AIzaSy...</pre>
+          </div>
+        </li>
+        <li>
+          <span class="step-num">2</span>
+          <div>
+            Run the inject script from inside the <code>chrome-extension/</code> folder:
+            <pre class="code-snippet">python inject_key.py</pre>
+            This writes <code>config.js</code> with your key.
+          </div>
+        </li>
+        <li>
+          <span class="step-num">3</span>
+          <div>
+            Reload the extension in Chrome:
+            <br>
+            <code>chrome://extensions</code> → find <strong>Code AI</strong> → click
+            the <strong>reload ↺</strong> icon.
+          </div>
+        </li>
+        <li>
+          <span class="step-num">4</span>
+          <div>Click <strong>Refresh Status</strong> above to confirm the key is loaded.</div>
+        </li>
+      </ol>
+
+      <div class="tip">
+        <strong>Get a free key</strong> at
+        <a href="https://aistudio.google.com/app/apikey" target="_blank">
+          Google AI Studio →
+        </a>
+      </div>
+    </section>
+
+    <!-- How to use -->
+    <section class="card">
+      <h2>How to use</h2>
+      <ol class="steps plain">
+        <li>
+          <span class="step-num">1</span>
+          <div><strong>Highlight</strong> any code snippet on a webpage (GitHub, Stack Overflow, MDN…)</div>
+        </li>
+        <li>
+          <span class="step-num">2</span>
+          <div>
+            Click the <strong>Code AI</strong> toolbar icon
+            <em>or</em> right-click → <em>"Explain with Code AI ✨"</em>
+            then click the icon when you see the <strong>!</strong> badge.
+          </div>
+        </li>
+        <li>
+          <span class="step-num">3</span>
+          <div>
+            Pick a mode:
+            <span class="chip">🔍 Explain</span>
+            <span class="chip">✅ Review</span>
+            <span class="chip">🔄 Convert</span>
+          </div>
+        </li>
+        <li>
+          <span class="step-num">4</span>
+          <div>Click the action button and wait for Gemini's response.</div>
+        </li>
+      </ol>
+    </section>
+
+  </main>
+</div>
+<script src="options.js"></script>
+</body>
+</html>

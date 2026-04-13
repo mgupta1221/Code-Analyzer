@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Code AI</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+<div class="app">
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-left">
+      <div class="logo">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <path d="M16 18l6-6-6-6M8 6L2 12l6 6" stroke="#6C63FF" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Code AI</span>
+      </div>
+      <span class="badge">Gemini</span>
+    </div>
+    <button id="settings-btn" class="icon-btn" title="Settings">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41
+                 M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </header>
+
+  <!-- Empty state -->
+  <div id="empty-state" class="empty-state">
+    <div class="empty-icon">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+        <path d="M16 18l6-6-6-6M8 6L2 12l6 6" stroke="#6C63FF" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <p class="empty-title">No code selected</p>
+    <p class="empty-desc">Highlight any code snippet on the page, then open this extension.</p>
+  </div>
+
+  <!-- Main content -->
+  <div id="main-content" style="display:none">
+
+    <!-- Selected code -->
+    <div class="section">
+      <div class="row-between">
+        <span class="label">Selected Code</span>
+        <span id="code-meta" class="meta"></span>
+      </div>
+      <div id="code-display" class="code-block"></div>
+    </div>
+
+    <!-- Mode tabs -->
+    <div class="tabs">
+      <button class="tab active" data-mode="explain">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+          <path d="M12 16v-4M12 8h.01" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round"/>
+        </svg>
+        Explain
+      </button>
+      <button class="tab" data-mode="review">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+          <path d="M9 11l3 3L22 4" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        Review
+      </button>
+      <button class="tab" data-mode="convert">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+          <path d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round"/>
+        </svg>
+        Convert
+      </button>
+    </div>
+
+    <!-- Convert options (shown only in convert mode) -->
+    <div id="convert-options" class="convert-options" style="display:none">
+      <span class="label">Target language</span>
+      <select id="target-language" class="lang-select">
+        <option>Python</option>
+        <option>JavaScript</option>
+        <option>TypeScript</option>
+        <option>Java</option>
+        <option>C++</option>
+        <option>C#</option>
+        <option>Go</option>
+        <option>Rust</option>
+        <option>Swift</option>
+        <option>Kotlin</option>
+        <option>Ruby</option>
+        <option>PHP</option>
+      </select>
+    </div>
+
+    <!-- Run button -->
+    <button id="run-btn" class="run-btn">
+      <span id="btn-icon">✨</span>
+      <span id="btn-text">Explain Code</span>
+      <span id="btn-loader" class="spinner" style="display:none"></span>
+    </button>
+
+    <!-- Result -->
+    <div id="result-section" class="result-section" style="display:none">
+      <div class="row-between">
+        <span class="label">AI Response</span>
+        <button id="copy-btn" class="copy-btn">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+            <rect x="9" y="9" width="13" height="13" rx="2"
+                  stroke="currentColor" stroke-width="2"/>
+            <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"
+                  stroke="currentColor" stroke-width="2"/>
+          </svg>
+          Copy
+        </button>
+      </div>
+      <div id="result-content" class="result-content"></div>
+    </div>
+
+  </div><!-- /main-content -->
+</div>
+<script src="popup.js"></script>
+</body>
+</html>
