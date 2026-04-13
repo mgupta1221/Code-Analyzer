@@ -45,14 +45,14 @@ No copy-pasting into ChatGPT. No tab switching. Just highlight and click.
 | Browser extension | Google Chrome (Manifest V3) |
 | AI model | Google Gemini 2.0 Flash |
 | Language | HTML, CSS, JavaScript |
-| Key setup script | Python 3 |
+| Key setup | Edit `config.js` directly |
 
 ---
 
 ## Project Structure
 
 ```
-chrome-extension/
+CodeAnalyzerPlugin/
 │
 ├── manifest.json       → Extension settings and permissions
 ├── background.js       → Handles AI calls and right-click menu
@@ -66,8 +66,7 @@ chrome-extension/
 ├── options.css         → Styling for the settings page
 ├── options.js          → Checks if your API key is loaded
 │
-├── config.js           → ⚙️ Your API key lives here (auto-generated)
-├── inject_key.py       → One-time script to load your key from .env into config.js
+├── config.js           → ⚙️ Your API key goes here
 ├── generate_icons.py   → Creates the extension icons
 │
 └── icons/
@@ -81,41 +80,30 @@ chrome-extension/
 ## Configuration — Setting up your API Key
 
 The extension needs a free Google Gemini API key to work.  
-The key is stored in **`config.js`** — a small file in the extension folder.
-
-> You never type your key into the browser. It's loaded automatically from your `.env` file.
+The key is stored in **`config.js`** — a small file inside the `CodeAnalyzerPlugin/` folder.
 
 ### Step 1 — Get a free API key
 
 Go to 👉 [Google AI Studio](https://aistudio.google.com/app/apikey) and create a free API key.  
 It will look like: `AIzaSyABC123...`
 
-### Step 2 — Add the key to your `.env` file
+### Step 2 — Add the key to `config.js`
 
-Open the file `Project3/.env` and make sure this line is there:
+Open the file `CodeAnalyzerPlugin/config.js` and replace the empty string with your key:
 
-```
-GEMINI_API_KEY=AIzaSy...your-key-here
-```
-
-### Step 3 — Run the setup script
-
-Open a terminal, go into the `chrome-extension` folder and run:
-
-```bash
-python inject_key.py
+```js
+var GEMINI_API_KEY = "AIzaSy...your-key-here";
 ```
 
-This reads the key from `.env` and writes it into `config.js`.  
-You'll see: `OK  config.js written  (key: AIzaSyBS...)`
+Save the file.
 
-### Step 4 — Reload the extension
+### Step 3 — Reload the extension
 
 Open Chrome → go to `chrome://extensions` → find **Code AI** → click the **reload ↺** button.
 
 That's it! Your key is now active.
 
-> **Note:** If you ever change your API key in `.env`, just re-run `python inject_key.py` and reload the extension.
+> **Note:** If you ever change your API key, just update the same line in `config.js` and reload the extension.
 
 ---
 
@@ -123,25 +111,24 @@ That's it! Your key is now active.
 
 ### What you need
 - Google Chrome browser
-- Python 3 installed on your computer
 - A free Gemini API key (see Configuration above)
 
 ### Install steps
 
-**1. Download the extension folder**
+**1. Download the plugin folder**
 
-Make sure you have the `chrome-extension/` folder on your computer.
+Make sure you have the `CodeAnalyzerPlugin/` folder on your computer.
 
 **2. Set up your API key**
 
-Follow the 4 steps in the **Configuration** section above.
+Follow the 3 steps in the **Configuration** section above.
 
 **3. Load the extension into Chrome**
 
 1. Open Chrome and go to `chrome://extensions`
 2. Turn on **Developer mode** using the toggle in the top-right corner
 3. Click **Load unpacked**
-4. Select the `chrome-extension/` folder
+4. Select the `CodeAnalyzerPlugin/` folder
 5. The Code AI icon will appear in your Chrome toolbar ✓
 
 ---
@@ -178,12 +165,11 @@ Follow the 4 steps in the **Configuration** section above.
 2. Click the **⚙️ settings** icon (top-right of popup)
 3. You'll see a status indicator:
    - 🟢 **"API key loaded"** — you're good to go
-   - 🔴 **"No API key found"** — re-run `inject_key.py` and reload the extension
+   - 🔴 **"No API key found"** — check that `config.js` has your key and reload the extension
 
 ---
 
 ## Frequently Asked Questions
-
 
 **Does it work on all websites?**  
 Yes — it works on any webpage where you can highlight text, including GitHub, Stack Overflow, MDN, and documentation sites.
@@ -198,3 +184,13 @@ No — you need to highlight a code snippet first before opening the extension.
 Python, JavaScript, TypeScript, Java, C++, C#, Go, Rust, Swift, Kotlin, Ruby, PHP.
 
 ---
+
+## Troubleshooting
+
+| Problem | Solution |
+|---|---|
+| "API key not found" | Open `config.js`, make sure your key is inside the quotes, then reload the extension |
+| Context menu not appearing | Reload the extension at `chrome://extensions` |
+| Popup says "No code selected" | Highlight the code on the page *before* clicking the icon |
+| Badge `!` stuck on icon | Click the icon — it clears automatically when the popup opens |
+| Blank or broken response | Try again — Gemini occasionally returns empty responses on first try |
